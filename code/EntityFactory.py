@@ -11,7 +11,7 @@ from code.Player import Player
 class EntityFactory:
 
     @staticmethod
-    def get_entity(entity_name: str, position=(0, 0)):
+    def get_entity(entity_name: str):
         match entity_name:
             case "Level1Bg":
                 list_bg = []
@@ -27,3 +27,4 @@ class EntityFactory:
                 return Enemy("Enemy1", (WIN_WIDTH + 10, random.randint(40, WIN_HEIGHT - 40)))
             case "Enemy2":
                 return Enemy("Enemy2", (WIN_WIDTH + 10, random.randint(40, WIN_HEIGHT - 40)))
+        return None
