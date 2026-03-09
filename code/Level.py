@@ -25,7 +25,7 @@ class Level:
         self.entity_list.extend(EntityFactory.get_entity("Level1Bg"))
         self.entity_list.append(EntityFactory.get_entity("Player1"))
         if game_mode in [MENU_OPTION[1], MENU_OPTION[2]]:
-            self.entity_list.append(EntityFactory.get_entity("Level2"))
+            self.entity_list.append(EntityFactory.get_entity("Player2"))
         pygame.time.set_timer(EVENT_ENEMY, SPAWN_TIME)
 
     def run(self):
@@ -38,12 +38,16 @@ class Level:
                 self.window.blit(source=ent.surf, dest=ent.rect)
                 ent.move()
 
-                if isinstance(ent, (Player, Enemy)):
+                if isinstance(ent, Player):
                     shoot = ent.shoot
                     if shoot is not None:
+                        self.entity_list.append(shoot)
+                    if isinstance(ent,Enemy):
+                        shoot = ent.shoot()
+                        if shoot is not None:
                             self.entity_list.append(shoot)
                     if ent.name == "Player1":
-                        self.level_text(14, f'Player1 - Health:{ent.health} | Score: {ent.score} ', C_GREEN, (10, 25))
+                        self.level_text(14, f'Player1 - Health:{ent.health} | Score: {ent.score}', C_GREEN, (10, 25))
                     if ent.name == "Player2":
                         self.level_text(14, f'Player2 - Health:{ent.health} | Score: {ent.score}', C_CYAN, (10, 45))
             for event in pygame.event.get():
@@ -53,7 +57,6 @@ class Level:
                 if event.type == EVENT_ENEMY:
                     enemy = random.choice(("Enemy1", "Enemy2"))
                     self.entity_list.append(EntityFactory.get_entity(enemy))
-
 
             # printed text
             self.level_text(14, f'{self.name} - Timeout: {self.timeout / 1000:.1f}s', C_WHITE, (10, 5))
