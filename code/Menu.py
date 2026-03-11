@@ -8,7 +8,6 @@ from code.Const import WIN_WIDTH, C_ORANGE, MENU_OPTION, C_WHITE, C_YELLOW
 
 
 class Menu:
-
     def __init__(self, window):
         self.window = window
         self.surf = pygame.image.load("./asset/MenuBg.png").convert_alpha()
@@ -34,7 +33,7 @@ class Menu:
             # Check for all events
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    pygame.quit()  # Close the Window
+                    pygame.quit()  # Close Window
                     quit()  # end pygame
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_DOWN:  # DOWN KEY
